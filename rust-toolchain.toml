@@ -1,0 +1,7 @@
+# Zac^ Rust Toolchain
+# Ensures consistent Rust version across development environments
+
+[toolchain]
+channel = "stable"
+components = ["rustfmt", "clippy"]
+targets = ["wasm32-unknown-unknown"]

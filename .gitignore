@@ -1,0 +1,76 @@
+# Zac^ .gitignore
+
+# Rust build artifacts
+target/
+**/*.rs.bk
+Cargo.lock
+
+# Tauri
+app/src-tauri/target/
+app/gen/
+
+# Trunk/WASM
+ui/dist/
+ui/.trunk/
+*.wasm
+
+# Node (if any JS tooling needed)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Database files (local state, not committed)
+data/*.db
+data/*.db-journal
+data/*.db-shm
+data/*.db-wal
+data/snapshots/
+
+# Logs
+logs/**/*.log
+logs/session/
+logs/workers/
+
+# User-specific config
+user/settings.toml
+
+# API keys (should never exist as files, but just in case)
+*.key
+*.pem
+.env
+.env.*
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor/IDE
+.idea/
+.vscode/
+*.code-workspace
+*.swp
+*.swo
+*~
+\#*\#
+.\#*
+
+# Temporary
+*.tmp
+*.temp
+*.bak
+*.orig
+
+# Large binary assets (track with Git LFS if needed)
+# app/assets/models/*.gltf
+# app/assets/models/*.glb
+
+# Project folders (managed by Zac^, not committed to this repo)
+projects/*/
+
+# Keep projects/.gitkeep to preserve directory
+!projects/.gitkeep

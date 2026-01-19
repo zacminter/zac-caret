@@ -1,0 +1,181 @@
+   Compiling zac-caret v0.1.0 (/home/zac/zac-caret/app)
+warning: unused import: `building_stage::BuildingStage`
+ --> src/game/entities/mod.rs:4:9
+  |
+4 | pub use building_stage::BuildingStage;
+  |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: unused import: `town_hall::TownHall`
+ --> src/game/entities/mod.rs:5:9
+  |
+5 | pub use town_hall::TownHall;
+  |         ^^^^^^^^^^^^^^^^^^^
+
+warning: unused imports: `spawn_initial_town_hall` and `update_building_visuals`
+ --> src/game/systems/mod.rs:5:29
+  |
+5 | pub use building_renderer::{update_building_visuals, spawn_initial_town_hall};
+  |                             ^^^^^^^^^^^^^^^^^^^^^^^  ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: unused import: `resources::GameState`
+  --> src/game/mod.rs:10:9
+   |
+10 | pub use resources::GameState;
+   |         ^^^^^^^^^^^^^^^^^^^^
+
+warning: type `UpgradeButton` is more private than the item `handle_upgrade_button`
+   --> src/ui/components/building_controls.rs:118:1
+    |
+118 | / pub fn handle_upgrade_button(
+119 | |     interaction_query: Query<&Interaction, (Changed<Interaction>, With<UpgradeButton>)>,
+120 | |     mut building_query: Query<&mut StagedBuilding>,
+121 | | ) {
+    | |_^ function `handle_upgrade_button` is reachable at visibility `pub(crate)`
+    |
+note: but type `UpgradeButton` is only usable at visibility `pub(self)`
+   --> src/ui/components/building_controls.rs:10:1
+    |
+10  | struct UpgradeButton;
+    | ^^^^^^^^^^^^^^^^^^^^
+    = note: `#[warn(private_interfaces)]` on by default
+
+warning: type `DowngradeButton` is more private than the item `handle_downgrade_button`
+   --> src/ui/components/building_controls.rs:133:1
+    |
+133 | / pub fn handle_downgrade_button(
+134 | |     interaction_query: Query<&Interaction, (Changed<Interaction>, With<DowngradeButton>)>,
+135 | |     mut building_query: Query<&mut StagedBuilding>,
+136 | | ) {
+    | |_^ function `handle_downgrade_button` is reachable at visibility `pub(crate)`
+    |
+note: but type `DowngradeButton` is only usable at visibility `pub(self)`
+   --> src/ui/components/building_controls.rs:14:1
+    |
+14  | struct DowngradeButton;
+    | ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: type `StageDisplayText` is more private than the item `update_stage_display`
+   --> src/ui/components/building_controls.rs:151:1
+    |
+151 | / pub fn update_stage_display(
+152 | |     building_query: Query<&StagedBuilding, Changed<StagedBuilding>>,
+153 | |     mut text_query: Query<&mut Text, With<StageDisplayText>>,
+154 | | ) {
+    | |_^ function `update_stage_display` is reachable at visibility `pub(crate)`
+    |
+note: but type `StageDisplayText` is only usable at visibility `pub(self)`
+   --> src/ui/components/building_controls.rs:18:1
+    |
+18  | struct StageDisplayText;
+    | ^^^^^^^^^^^^^^^^^^^^^^^
+
+warning: type `UpgradeButton` is more private than the item `button_hover_system`
+   --> src/ui/components/building_controls.rs:163:1
+    |
+163 | / pub fn button_hover_system(
+164 | |     mut interaction_query: Query<
+165 | |         (&Interaction, &mut BackgroundColor),
+166 | |         (Changed<Interaction>, Or<(With<UpgradeButton>, With<DowngradeButton>)>),
+167 | |     >,
+168 | | ) {
+    | |_^ function `button_hover_system` is reachable at visibility `pub(crate)`
+    |
+note: but type `UpgradeButton` is only usable at visibility `pub(self)`
+   --> src/ui/components/building_controls.rs:10:1
+    |
+10  | struct UpgradeButton;
+    | ^^^^^^^^^^^^^^^^^^^^
+
+warning: type `DowngradeButton` is more private than the item `button_hover_system`
+   --> src/ui/components/building_controls.rs:163:1
+    |
+163 | / pub fn button_hover_system(
+164 | |     mut interaction_query: Query<
+165 | |         (&Interaction, &mut BackgroundColor),
+166 | |         (Changed<Interaction>, Or<(With<UpgradeButton>, With<DowngradeButton>)>),
+167 | |     >,
+168 | | ) {
+    | |_^ function `button_hover_system` is reachable at visibility `pub(crate)`
+    |
+note: but type `DowngradeButton` is only usable at visibility `pub(self)`
+   --> src/ui/components/building_controls.rs:14:1
+    |
+14  | struct DowngradeButton;
+    | ^^^^^^^^^^^^^^^^^^^^^^
+
+warning: field `building_type` is never read
+ --> src/game/components/staged_building.rs:8:9
+  |
+6 | pub struct StagedBuilding {
+  |            -------------- field in this struct
+7 |     pub current_stage: BuildingStage,
+8 |     pub building_type: BuildingType,
+  |         ^^^^^^^^^^^^^
+  |
+  = note: `StagedBuilding` has a derived impl for the trait `Debug`, but this is intentionally ignored during dead code analysis
+  = note: `#[warn(dead_code)]` on by default
+
+warning: associated function `new` is never used
+  --> src/game/entities/town_hall.rs:10:12
+   |
+9  | impl TownHall {
+   | ------------- associated function in this implementation
+10 |     pub fn new() -> Self {
+   |            ^^^
+
+warning: struct `TauriHandle` is never constructed
+ --> src/game/resources.rs:5:12
+  |
+5 | pub struct TauriHandle(pub AppHandle);
+  |            ^^^^^^^^^^^
+
+warning: fields `workers_count` and `tasks_count` are never read
+  --> src/game/resources.rs:9:9
+   |
+8  | pub struct GameState {
+   |            --------- fields in this struct
+9  |     pub workers_count: u32,
+   |         ^^^^^^^^^^^^^
+10 |     pub tasks_count: u32,
+   |         ^^^^^^^^^^^
+
+warning: function `select_entity` is never used
+  --> src/ui/ipc.rs:11:8
+   |
+11 | pub fn select_entity(_entity_id: String) -> Result<(), String> {
+   |        ^^^^^^^^^^^^^
+
+warning: function `send_chat_message` is never used
+  --> src/ui/ipc.rs:17:8
+   |
+17 | pub fn send_chat_message(_message: String) -> Result<String, String> {
+   |        ^^^^^^^^^^^^^^^^^
+
+warning: function `get_game_stats` is never used
+  --> src/ui/ipc.rs:23:8
+   |
+23 | pub fn get_game_stats() -> Result<GameStats, String> {
+   |        ^^^^^^^^^^^^^^
+
+warning: function `toggle_autonomy` is never used
+  --> src/ui/ipc.rs:32:8
+   |
+32 | pub fn toggle_autonomy(_enabled: bool) -> Result<(), String> {
+   |        ^^^^^^^^^^^^^^^
+
+error: type `UpgradeButton` is private
+  --> src/main.rs:51:5
+   |
+51 | /     App::new()
+52 | |         .add_plugins(DefaultPlugins.set(WindowPlugin {
+53 | |             primary_window: Some(Window {
+54 | |                 title: "Zac^ Command Center".into(),
+...  |
+78 | |             ui::button_hover_system,
+79 | |         ))
+   | |__________^ private type
+
+warning: `zac-caret` (bin "zac-caret") generated 17 warnings
+error: could not compile `zac-caret` (bin "zac-caret") due to 1 previous error; 17 warnings emitted

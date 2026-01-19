@@ -1,0 +1,71 @@
+#![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
+use bevy::prelude::*;
+use std::path::PathBuf;
+
+mod camera;
+mod core;
+mod game;
+mod agents;
+mod ui;
+
+use core::database;
+
+#[derive(Resource)]
+pub struct AppPaths {
+    pub data_dir: PathBuf,
+    pub db_path: PathBuf,
+}
+
+impl Default for AppPaths {
+    fn default() -> Self {
+        let home = dirs::home_dir().unwrap_or_else(|| PathBuf::from("."));
+        let data_dir = home.join("zac-caret").join("data");
+        std::fs::create_dir_all(&data_dir).ok();
+
+        Self {
+            db_path: data_dir.join("zac.db"),
+            data_dir,
+        }
+    }
+}
+
+#[derive(Resource)]
+pub struct Database(pub std::sync::Arc<std::sync::Mutex<rusqlite::Connection>>);
+
+fn main() {
+    // Initialize paths and database
+    let paths = AppPaths::default();
+    let conn = database::init_database(&paths.db_path)
+        .expect("Failed to initialize database");
+
+    // Load saved camera state
+    let camera_state = database::load_state(&conn, "camera_state")
+        .ok()
+        .flatten()
+        .and_then(|s| serde_json::from_str::<camera::CameraState>(&s).ok())
+        .unwrap_or_default();
+
+    let db = Database(std::sync::Arc::new(std::sync::Mutex::new(conn)));
+
+    App::new()
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                title: "Zac^ Command Center".into(),
+                resolution: (1280., 720.).into(),
+                ..default()
+            }),
+            ..default()
+        }))
+        .insert_resource(paths)
+        .insert_resource(db)
+        .insert_resource(camera_state)
+        .init_resource::<camera::CameraSettings>()
+        .add_systems(Startup, (game::world::setup_world, camera::spawn_camera_from_state))
+        .add_systems(Update, (
+            camera::camera_pan,
+            camera::camera_zoom,
+            camera::save_camera_state,
+        ))
+        .run();
+}

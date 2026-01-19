@@ -1,0 +1,65 @@
+# Zac^ .claudeignore
+# Files and directories Claude Code should not read/index
+
+# Build artifacts
+target/
+dist/
+*.wasm
+*.d
+
+# Dependencies (too large, not useful context)
+node_modules/
+
+# Database files (binary, not readable)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Logs (can be huge, usually not relevant)
+logs/
+*.log
+
+# Snapshots and cached data
+data/snapshots/
+data/knowledge.db
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.code-workspace
+
+# Git
+.git/
+
+# Tauri build outputs
+app/src-tauri/target/
+app/gen/
+
+# Trunk (Leptos) build cache
+ui/.trunk/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Large assets (reference by name, don't embed)
+app/assets/models/*.gltf
+app/assets/models/*.glb
+app/assets/sounds/*.wav
+app/assets/sounds/*.mp3
+app/assets/sounds/*.ogg
+
+# Keep these INCLUDED (don't ignore):
+# - docs/*.md (architecture, roadmap)
+# - app/src/**/*.rs (source code)
+# - app/Cargo.toml (dependencies)
+# - ui/src/**/*.rs (UI source)
+# - app/config/*.toml (configuration)
+# - CLAUDE.md (this context file)

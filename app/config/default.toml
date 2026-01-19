@@ -1,0 +1,28 @@
+[general]
+autonomy_enabled = true
+max_concurrent_workers = 10
+reflection_enabled = true
+
+[knowledge]
+injection_enabled = true
+max_injection_tokens = 1000
+relevance_threshold = 0.7
+
+[visuals]
+camera_speed = 20.0
+zoom_min = 10.0
+zoom_max = 80.0
+show_worker_names = true
+
+[audio]
+master_volume = 0.8
+notification_sounds = true
+ambient_sounds = true
+
+[tokens]
+hourly_budget = 50000
+warning_threshold = 0.2
+
+[demo]
+enabled = false
+simulation_speed = 1.0

@@ -54,6 +54,11 @@ fn main() {
     let worker_manager = game::resources::WorkerManager::new(paths.db_path.clone());
     let cli_manager = game::resources::CliManagerResource::new(paths.data_dir.clone());
 
+    // Create autonomy settings, token budget, and game stats
+    let autonomy_settings = game::resources::AutonomySettings::default();
+    let token_budget = game::resources::TokenBudget::default();
+    let game_stats = game::resources::GameStats::default();
+
     App::new()
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
@@ -70,6 +75,9 @@ fn main() {
         .insert_resource(mission_manager)
         .insert_resource(worker_manager)
         .insert_resource(cli_manager)
+        .insert_resource(autonomy_settings)
+        .insert_resource(token_budget)
+        .insert_resource(game_stats)
         .init_resource::<camera::CameraSettings>()
         .add_systems(Startup, (
             game::world::setup_world,
@@ -98,6 +106,16 @@ fn main() {
             ui::update_stage_display,
             ui::button_hover_system,
             ui::spawn_worker_on_keypress,
+        ))
+        .add_systems(Update, (
+            game::systems::autonomous_task_assignment,
+            game::systems::toggle_autonomy_keypress,
+            game::systems::display_autonomy_status,
+            game::systems::check_budget_reset,
+            game::systems::display_budget_warnings,
+            game::systems::display_budget_status,
+            game::systems::update_game_stats,
+            game::systems::display_comprehensive_stats,
         ))
         .run();
 }

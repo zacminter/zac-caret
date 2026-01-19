@@ -94,6 +94,7 @@ pub struct WorkerVisual;
 
 /// Component for worker name display
 #[derive(Component)]
+#[allow(dead_code)]
 pub struct WorkerNameTag;
 
 /// Random name generator
@@ -110,6 +111,6 @@ impl NameGenerator {
         use rand::Rng;
         let mut rng = rand::thread_rng();
         let first = Self::FIRST_NAMES[rng.gen_range(0..Self::FIRST_NAMES.len())];
-        format!("{}", first)
+        first.to_string()
     }
 }

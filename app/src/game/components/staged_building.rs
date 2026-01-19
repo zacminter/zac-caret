@@ -5,6 +5,7 @@ use crate::game::entities::building_stage::BuildingStage;
 #[derive(Component, Debug)]
 pub struct StagedBuilding {
     pub current_stage: BuildingStage,
+    #[allow(dead_code)]
     pub building_type: BuildingType,
 }
 

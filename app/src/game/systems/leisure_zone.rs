@@ -32,7 +32,7 @@ pub fn spawn_leisure_zone(
         },
     ));
 
-    println!("Leisure zone spawned at {:?}", center);
+    println!("Leisure zone spawned at {center:?}");
 }
 
 /// Get a random position within the leisure zone

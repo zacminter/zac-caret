@@ -4,11 +4,13 @@ use std::io::Write;
 use uuid::Uuid;
 
 pub struct ClaudeCliManager {
+    #[allow(dead_code)]
     pub working_dir: PathBuf,
     pub active_processes: Vec<ClaudeProcess>,
 }
 
 pub struct ClaudeProcess {
+    #[allow(dead_code)]
     pub id: String,
     pub worker_id: String,
     pub mission_id: String,
@@ -34,8 +36,8 @@ impl ClaudeCliManager {
     ) -> Result<String, String> {
         let process_id = Uuid::new_v4().to_string();
 
-        println!("🚀 Spawning Claude CLI for mission: {}", mission_file);
-        println!("   Working dir: {}", project_path);
+        println!("🚀 Spawning Claude CLI for mission: {mission_file}");
+        println!("   Working dir: {project_path}");
 
         // Build command
         let child = Command::new("claude-code")
@@ -46,7 +48,7 @@ impl ClaudeCliManager {
             .stdout(Stdio::piped())
             .stderr(Stdio::piped())
             .spawn()
-            .map_err(|e| format!("Failed to spawn claude-code: {}", e))?;
+            .map_err(|e| format!("Failed to spawn claude-code: {e}"))?;
 
         let process = ClaudeProcess {
             id: process_id.clone(),
@@ -90,7 +92,7 @@ impl ClaudeCliManager {
                     still_running.push(process);
                 }
                 Err(e) => {
-                    eprintln!("Error checking process: {}", e);
+                    eprintln!("Error checking process: {e}");
                     still_running.push(process);
                 }
             }
@@ -101,6 +103,7 @@ impl ClaudeCliManager {
     }
 
     /// Send additional instructions to a running worker
+    #[allow(dead_code)]
     pub fn send_message(&mut self, process_id: &str, message: &str) -> Result<(), String> {
         let process = self.active_processes.iter_mut()
             .find(|p| p.id == process_id)
@@ -108,13 +111,13 @@ impl ClaudeCliManager {
 
         if let Some(stdin) = process.child.stdin.as_mut() {
             stdin.write_all(message.as_bytes())
-                .map_err(|e| format!("Failed to write to stdin: {}", e))?;
+                .map_err(|e| format!("Failed to write to stdin: {e}"))?;
             stdin.write_all(b"\n")
-                .map_err(|e| format!("Failed to write newline: {}", e))?;
+                .map_err(|e| format!("Failed to write newline: {e}"))?;
             stdin.flush()
-                .map_err(|e| format!("Failed to flush: {}", e))?;
+                .map_err(|e| format!("Failed to flush: {e}"))?;
 
-            println!("📨 Sent message to worker: {}", message);
+            println!("📨 Sent message to worker: {message}");
             Ok(())
         } else {
             Err("Process has no stdin".to_string())

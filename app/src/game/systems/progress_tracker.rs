@@ -8,7 +8,7 @@ pub fn track_project_progress(
     mut project_query: Query<(&mut Project, &mut StagedBuilding)>,
     _project_manager: Res<ProjectManager>,
 ) {
-    for (mut project, mut building) in project_query.iter_mut() {
+    for (project, mut building) in project_query.iter_mut() {
         // Calculate expected stage based on mission completion
         let expected_stage = project.visual_stage();
         let current_stage = building.current_stage.as_u8();
@@ -39,7 +39,7 @@ pub fn sync_project_data(
     let projects = match project_manager.load_projects() {
         Ok(p) => p,
         Err(e) => {
-            eprintln!("Failed to sync projects: {}", e);
+            eprintln!("Failed to sync projects: {e}");
             return;
         }
     };

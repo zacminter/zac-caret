@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::game::worker::{Worker, WorkerVisual, WorkerState, NameGenerator};
+use crate::game::worker::{Worker, WorkerVisual, NameGenerator};
 use crate::game::resources::WorkerManager;
 use crate::game::systems::leisure_zone::LeisureZone;
 
@@ -79,7 +79,7 @@ pub fn process_worker_production(
                     println!("✅ Worker '{}' completed training! (ID: {})", order.worker_name, worker_id);
                 }
                 Err(e) => {
-                    eprintln!("Failed to create worker: {}", e);
+                    eprintln!("Failed to create worker: {e}");
                 }
             }
         }
@@ -129,7 +129,7 @@ pub fn restore_workers(
     let workers = match worker_manager.load_workers() {
         Ok(w) => w,
         Err(e) => {
-            eprintln!("Failed to load workers: {}", e);
+            eprintln!("Failed to load workers: {e}");
             return;
         }
     };

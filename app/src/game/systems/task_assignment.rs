@@ -88,7 +88,7 @@ pub fn start_mission_on_arrival(
                         let mission_file = match MissionWriter::write_mission_file(mission, &project.path) {
                             Ok(path) => path,
                             Err(e) => {
-                                eprintln!("Failed to write mission file: {}", e);
+                                eprintln!("Failed to write mission file: {e}");
                                 continue;
                             }
                         };
@@ -105,7 +105,7 @@ pub fn start_mission_on_arrival(
                             &mission_file,
                         ) {
                             Ok(process_id) => {
-                                println!("✅ Claude CLI spawned (process: {})", process_id);
+                                println!("✅ Claude CLI spawned (process: {process_id})");
 
                                 // Update worker state
                                 worker.state = WorkerState::Working {
@@ -128,7 +128,7 @@ pub fn start_mission_on_arrival(
                                 );
                             }
                             Err(e) => {
-                                eprintln!("❌ Failed to spawn Claude CLI: {}", e);
+                                eprintln!("❌ Failed to spawn Claude CLI: {e}");
 
                                 // Reset worker to idle
                                 worker.state = WorkerState::Idle;
@@ -166,8 +166,8 @@ pub fn check_cli_completions(
         let tokens = completion.extract_tokens();
         let summary = completion.extract_summary();
 
-        println!("   Tokens used: {}", tokens);
-        println!("   Summary: {}", summary);
+        println!("   Tokens used: {tokens}");
+        println!("   Summary: {summary}");
 
         // Update mission status
         let status = if completion.success {
@@ -223,7 +223,7 @@ pub fn check_cli_completions(
                         .filter(|m| m.project_id == mission.project_id)
                         .count();
 
-                    println!("   Project progress: {}/{} missions complete", completed_count, total_project_missions);
+                    println!("   Project progress: {completed_count}/{total_project_missions} missions complete");
                 }
             }
         }

@@ -1,5 +1,5 @@
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use crate::game::project::Mission;
 
 pub struct MissionWriter;
@@ -9,7 +9,7 @@ impl MissionWriter {
     pub fn write_mission_file(mission: &Mission, project_path: &str) -> Result<String, String> {
         let missions_dir = Path::new(project_path).join("missions");
         fs::create_dir_all(&missions_dir)
-            .map_err(|e| format!("Failed to create missions directory: {}", e))?;
+            .map_err(|e| format!("Failed to create missions directory: {e}"))?;
 
         let filename = format!("M{:02}.md", mission.mission_number);
         let filepath = missions_dir.join(&filename);
@@ -17,7 +17,7 @@ impl MissionWriter {
         let content = Self::format_mission_content(mission);
 
         fs::write(&filepath, content)
-            .map_err(|e| format!("Failed to write mission file: {}", e))?;
+            .map_err(|e| format!("Failed to write mission file: {e}"))?;
 
         Ok(filepath.to_string_lossy().to_string())
     }
@@ -71,31 +71,32 @@ impl MissionWriter {
     /// Mark mission as started
     pub fn mark_mission_started(mission_file: &str, worker_name: &str) -> Result<(), String> {
         let content = fs::read_to_string(mission_file)
-            .map_err(|e| format!("Failed to read mission file: {}", e))?;
+            .map_err(|e| format!("Failed to read mission file: {e}"))?;
 
         let updated = content
-            .replace("Worker: (not yet assigned)", &format!("Worker: {}", worker_name))
+            .replace("Worker: (not yet assigned)", &format!("Worker: {worker_name}"))
             .replace("Started: (not yet started)", &format!("Started: {}", chrono::Local::now().format("%Y-%m-%d %H:%M:%S")))
             .replace("Status\nnot_started", "Status\nin_progress");
 
         fs::write(mission_file, updated)
-            .map_err(|e| format!("Failed to update mission file: {}", e))?;
+            .map_err(|e| format!("Failed to update mission file: {e}"))?;
 
         Ok(())
     }
 
     /// Mark mission as completed
+    #[allow(dead_code)]
     pub fn mark_mission_completed(mission_file: &str, summary: &str) -> Result<(), String> {
         let content = fs::read_to_string(mission_file)
-            .map_err(|e| format!("Failed to read mission file: {}", e))?;
+            .map_err(|e| format!("Failed to read mission file: {e}"))?;
 
         let updated = content
             .replace("Completed: (not yet completed)", &format!("Completed: {}", chrono::Local::now().format("%Y-%m-%d %H:%M:%S")))
             .replace("Status\nin_progress", "Status\ncompleted")
-            + &format!("\n\n## Completion Summary\n{}\n", summary);
+            + &format!("\n\n## Completion Summary\n{summary}\n");
 
         fs::write(mission_file, updated)
-            .map_err(|e| format!("Failed to update mission file: {}", e))?;
+            .map_err(|e| format!("Failed to update mission file: {e}"))?;
 
         Ok(())
     }

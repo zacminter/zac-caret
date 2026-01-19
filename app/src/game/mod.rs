@@ -10,6 +10,8 @@ pub mod systems;
 pub mod worker;
 pub mod world;
 
+// Note: GameState is used in UI layer, will be re-exported in later phase
+#[allow(unused_imports)]
 pub use resources::GameState;
 pub struct GamePlugin;
 

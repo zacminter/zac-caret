@@ -14,6 +14,7 @@ pub struct Project {
 }
 
 impl Project {
+    #[allow(dead_code)]
     pub fn new(name: String, path: String) -> Self {
         Self {
             id: Uuid::new_v4().to_string(),
@@ -25,6 +26,7 @@ impl Project {
         }
     }
 
+    #[allow(dead_code)]
     pub fn completion_percentage(&self) -> f32 {
         if self.total_missions == 0 {
             return 0.0;
@@ -85,12 +87,16 @@ pub struct Mission {
     pub status: MissionStatus,
     pub dependencies: Vec<u32>, // Mission numbers this depends on
     pub file_path: Option<String>,
+    #[allow(dead_code)]
     pub assigned_worker_id: Option<String>,
+    #[allow(dead_code)]
     pub tokens_used: u32,
+    #[allow(dead_code)]
     pub completion_summary: Option<String>,
 }
 
 impl Mission {
+    #[allow(dead_code)]
     pub fn new(project_id: String, mission_number: u32, title: String) -> Self {
         Self {
             id: Uuid::new_v4().to_string(),

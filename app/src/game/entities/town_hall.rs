@@ -7,6 +7,7 @@ pub struct TownHall {
 }
 
 impl TownHall {
+    #[allow(dead_code)]
     pub fn new() -> Self {
         Self {
             _level: 1,

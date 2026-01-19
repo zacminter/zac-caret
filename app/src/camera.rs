@@ -140,7 +140,7 @@ pub fn save_camera_state(
             let state = CameraState::from_transform(transform);
             if let Ok(json) = serde_json::to_string(&state) {
                 if let Ok(conn) = db.0.lock() {
-                    let _ = crate::core::database::save_state(&*conn, "camera_state", &json);
+                    let _ = crate::core::database::save_state(&conn, "camera_state", &json);
                 }
             }
         }

@@ -17,7 +17,7 @@ pub fn spawn_worker_on_keypress(
                 return;
             }
             Err(e) => {
-                eprintln!("Failed to count workers: {}", e);
+                eprintln!("Failed to count workers: {e}");
                 return;
             }
             _ => {}

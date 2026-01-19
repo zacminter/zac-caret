@@ -15,7 +15,7 @@ pub fn spawn_project_buildings(
     let projects = match project_manager.load_projects() {
         Ok(p) => p,
         Err(e) => {
-            eprintln!("Failed to load projects: {}", e);
+            eprintln!("Failed to load projects: {e}");
             return;
         }
     };
